@@ -7,6 +7,9 @@
    * [编辑接口](https://github.com/VoiceNews/doc/blob/master/interface.md#13-编辑接口)
       * [获取待编辑处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#131-获取待编辑处理的新闻)
       * [获取待总编处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#132-获取待总编处理的新闻)
+      * [编辑新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#133-编辑新闻)
+      * [发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#134-发布新闻)
+      * [删除新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#135-删除新闻)
 
 ## 1. 新闻发布系统
 ### 1.1 内部系统间接口
@@ -166,6 +169,7 @@
           id: 1,
           title: "", // 标题
           content: "", //正文（摘要的内容）
+          editorScore: 90, //编辑推荐度 0~100
         }
     }
 ```    
