@@ -1,33 +1,40 @@
 ## 目录
-* [后台管理接口](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#1-后台管理接口)
-   * [用户](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#11-用户)
-   * [信息管理](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#12-信息管理)
-      * [查询设备厂商信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#121-查询设备厂商信息)
-   * [业务数据查询](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#13-业务数据查询)
-      * [查询车辆进出记录](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#131-查询车辆进出记录)
-   * [账号管理](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#14-账号管理)
-   * [小区信息登录](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#11-小区信息登录)
-      * [新增小区](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#111-新增小区)
-      * [查询小区信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#112-查询小区信息)
-      * [更新小区信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#113-更新小区信息)
-* [后台与APP接口](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#2-后台与app接口)
-    * [用户注册与登录](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#21-用户注册与登录)
-        * [获取手机验证码](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#211-获取手机验证码)
-        * [手机验证码登陆](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#212-手机验证码登陆)
-        * [获取用户信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#213-获取用户信息)
-        * [修改用户信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#214-修改用户信息)
-        * [用户注销登录](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#215-用户注销登录)
-    * [车位查询](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#22-车位查询)
-        * [获取周边车位信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#221-获取周边车位信息)
-        * [获取小区车位信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#221-获取小区车位信息)
-    * [车位预定](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#23-预定车位)
-        * [预定车位(pre-pay)](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#231-预定车位pre-pay)
-        * [预定车位(post-pay)](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#232-预定车位post-pay)
-        * [获取我的预定](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#233-获取我的预定)
-        * [取消车位预定](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#234-取消车位预定)
-     * [个人信息查询](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#24-个人信息查询)
-        * [查看我的历史停车信息](https://github.com/lynn1982/carshare_srv/blob/master/doc/interfaces.md#241-查看我的历史停车信息)
+* [新闻发布系统](https://github.com/VoiceNews/doc/blob/master/interface.md#1-新闻发布系统)
+   * [内部系统间接口](https://github.com/VoiceNews/doc/blob/master/interface.md#11-内部系统间接口)
+      * [机器人新闻发布接口](https://github.com/VoiceNews/doc/blob/master/interface.md#111-机器人新闻发布接口)
 
 ## 1. 新闻发布系统
 ### 1.1 内部系统间接口
+|METHOD|PATH|MSG TYPE|
+|:----:|:-----:|:----|
+|POST|/internel|MSG_TYPE_INTERNEL_NEW_NEWS|
 #### 1.1.1 机器人新闻发布接口
+上报报文
+```
+    {
+        type: "MSG_TYPE_INTERNEL_NEW_NEWS",
+        data : [
+          { //第一条新闻
+            category: "sports", //类别: sports,finance,politics
+            title: "", // 标题
+            content: "", //正文（摘要的内容）
+            source: "", //来源：toutiao,sina,sohu
+            oriUrl: "", //原始链接
+            newsTime: "2017-09-01", //新闻写作时间；另外在数据库中创建该新闻时，需要加一个创建时间字段
+            audioFile: "audio/20170901/sports/sport_0000001", //语音文件的文件名. 0000001建议为数据库的id字段
+            voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
+            audoFileSuffix: ".mp3" // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
+          },
+          { //第二条新闻，字段同上
+          }
+        ]
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_INTERNEL_NEW_NEWS",
+        ret：0,        //0：成功，非0：失败
+        errStr: "N/A"  //出错时，携带该字段
+    }
+```
