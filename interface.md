@@ -23,7 +23,8 @@
             newsTime: "2017-09-01", //新闻写作时间；另外在数据库中创建该新闻时，需要加一个创建时间字段
             audioFile: "audio/20170901/sports/sport_0000001", //语音文件的文件名. 0000001建议为数据库的id字段
             voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
-            audoFileSuffix: ".mp3" // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
+            audoFileSuffix: ".mp3", // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
+            imageFile: ["img/20170901/sports/sport_0000001_0.jpg", "img/20170901/sports/sport_0000001_1.jpg"] //新闻配图文件地址
           },
           { //第二条新闻，字段同上
           }
