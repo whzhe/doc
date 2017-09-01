@@ -2,6 +2,11 @@
 * [新闻发布系统](https://github.com/VoiceNews/doc/blob/master/interface.md#1-新闻发布系统)
    * [内部系统间接口](https://github.com/VoiceNews/doc/blob/master/interface.md#11-内部系统间接口)
       * [机器人新闻发布接口](https://github.com/VoiceNews/doc/blob/master/interface.md#111-机器人新闻发布接口)
+   * [用户接口](https://github.com/VoiceNews/doc/blob/master/interface.md#12-用户接口)
+      * [用户获取新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#121-用户获取新闻)
+   * [编辑接口](https://github.com/VoiceNews/doc/blob/master/interface.md#13-编辑接口)
+      * [获取待编辑处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#131-获取待编辑处理的新闻)
+      * [获取待总编处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#132-获取待总编处理的新闻)
 
 ## 1. 新闻发布系统
 ### 1.1 内部系统间接口
@@ -61,6 +66,7 @@
         ret: 0, // 非0 时，携带errStr字段，不携带data
         data : [
           { //第一条新闻
+            id: 1, // 数据库identity字段
             category: "sports", //类别: sports,finance,politics
             title: "", // 标题
             content: "", //正文（摘要的内容）
@@ -99,7 +105,8 @@
         ret: 0, // 非0 时，携带errStr字段，不携带data
         data : [
           { //第一条新闻
-            category: "sports", //类别: sports,finance,politics
+            id: 1, // 数据库identity字段
+            category: "sports", //类别: sports,finance,politics
             title: "", // 标题
             content: "", //正文（摘要的内容）
             source: "", //来源：toutiao,sina,sohu
@@ -133,6 +140,7 @@
         ret: 0, // 非0 时，携带errStr字段，不携带data
         data : [
           { //第一条新闻
+            id: 1, // 数据库identity字段
             category: "sports", //类别: sports,finance,politics
             title: "", // 标题
             content: "", //正文（摘要的内容）
@@ -149,3 +157,56 @@
         ]
     }
 ```
+#### 1.3.3 编辑新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_EDIT_NEWS",
+        data: {
+          id: 1,
+          title: "", // 标题
+          content: "", //正文（摘要的内容）
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_GET_NEWS_2",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
+#### 1.3.4 发布新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_PUBLISH_NEWS",
+        data: {
+          idArray: [1, 2, 3] // 发布新闻的id数组
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_PUBLISH_NEWS",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
+#### 1.3.5 删除新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_DEL_NEWS",
+        data: {
+          idArray: [1, 2, 3] // 新闻的id数组
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_DEL_NEWS",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
