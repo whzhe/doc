@@ -8,8 +8,10 @@
       * [获取待编辑处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#131-获取待编辑处理的新闻)
       * [获取待总编处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#132-获取待总编处理的新闻)
       * [编辑新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#133-编辑新闻)
-      * [发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#134-发布新闻)
-      * [删除新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#135-删除新闻)
+      * [总编编辑新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#134-编辑新闻)
+      * [发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#135-发布新闻)
+      * [撤回发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#136-撤回发布新闻)
+      * [删除新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#137-删除新闻)
 
 ## 1. 新闻发布系统
 ### 1.1 内部系统间接口
@@ -221,7 +223,24 @@
         ret: 0, // 非0 时，携带errStr字段，不携带data
     }
 ````
-#### 1.3.6 删除新闻
+#### 1.3.6 撤回发布新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_RECALL_NEWS",
+        data: {
+          idArray: [1, 2, 3] // 发布新闻的id数组
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_PUBLISH_NEWS",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
+#### 1.3.7 删除新闻
 上报报文
 ```
     {
