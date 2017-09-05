@@ -8,8 +8,10 @@
       * [获取待编辑处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#131-获取待编辑处理的新闻)
       * [获取待总编处理的新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#132-获取待总编处理的新闻)
       * [编辑新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#133-编辑新闻)
-      * [发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#134-发布新闻)
-      * [删除新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#135-删除新闻)
+      * [总编编辑新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#134-编辑新闻)
+      * [发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#135-发布新闻)
+      * [撤回发布新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#136-撤回发布新闻)
+      * [删除新闻](https://github.com/VoiceNews/doc/blob/master/interface.md#137-删除新闻)
 
 ## 1. 新闻发布系统
 ### 1.1 内部系统间接口
@@ -33,6 +35,7 @@
             voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
             audoFileSuffix: ".mp3", // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
             imageFile: ["img/20170901/sports/sport_0000001_0.jpg", "img/20170901/sports/sport_0000001_1.jpg"] //新闻配图文件地址
+            states:"",//表示此条新闻的状态，0表示需要编辑处理，1表示需要总编处理，2表示用户可看
           },
           { //第二条新闻，字段同上
           }
@@ -80,6 +83,7 @@
             voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
             audoFileSuffix: ".mp3", // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
             imageFile: ["img/20170901/sports/sport_0000001_0.jpg", "img/20170901/sports/sport_0000001_1.jpg"] //新闻配图文件地址
+            states:"",//表示此条新闻的状态，0表示需要编辑处理，1表示需要总编处理，2表示用户可看
           },
           { //第二条新闻，字段同上
           }
@@ -119,6 +123,7 @@
             voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
             audoFileSuffix: ".mp3", // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
             imageFile: ["img/20170901/sports/sport_0000001_0.jpg", "img/20170901/sports/sport_0000001_1.jpg"] //新闻配图文件地址
+            states:"",//表示此条新闻的状态，0表示需要编辑处理，1表示需要总编处理，2表示用户可看
           },
           { //第二条新闻，字段同上
           }
@@ -154,6 +159,7 @@
             voiceType: ["male", "female", "lingzhiling"], //后台合成几个，放几个，至少合成male与female
             audoFileSuffix: ".mp3", // 实际使用中文件名为 [audioFile]_[voiceType].[audoFileSuffix]
             imageFile: ["img/20170901/sports/sport_0000001_0.jpg", "img/20170901/sports/sport_0000001_1.jpg"] //新闻配图文件地址
+            states:"",//表示此条新闻的状态，0表示需要编辑处理，1表示需要总编处理，2表示用户可看
           },
           { //第二条新闻，字段同上
           }
@@ -164,7 +170,7 @@
 上报报文
 ```
     {
-        type: "MSG_TYPE_EDIT_EDIT_NEWS",
+        type: "MSG_TYPE_EDIT_EDIT_NEWS_1",
         data: {
           id: 1,
           title: "", // 标题
@@ -176,11 +182,31 @@
 回复报文
 ```
     {
-        type: "MSG_TYPE_EDIT_GET_NEWS_2",
+        type: "MSG_TYPE_EDIT_EDIT_NEWS",
         ret: 0, // 非0 时，携带errStr字段，不携带data
     }
 ````
-#### 1.3.4 发布新闻
+#### 1.3.4 总编编辑新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_EDIT_NEWS_2",
+        data: {
+          id: 1,
+          title: "", // 标题
+          content: "", //正文（摘要的内容）
+          editorScore: 90, //编辑推荐度 0~100
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_EDIT_NEWS",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
+#### 1.3.5 发布新闻
 上报报文
 ```
     {
@@ -197,7 +223,24 @@
         ret: 0, // 非0 时，携带errStr字段，不携带data
     }
 ````
-#### 1.3.5 删除新闻
+#### 1.3.6 撤回发布新闻
+上报报文
+```
+    {
+        type: "MSG_TYPE_EDIT_RECALL_NEWS",
+        data: {
+          idArray: [1, 2, 3] // 发布新闻的id数组
+        }
+    }
+```    
+回复报文
+```
+    {
+        type: "MSG_TYPE_EDIT_PUBLISH_NEWS",
+        ret: 0, // 非0 时，携带errStr字段，不携带data
+    }
+````
+#### 1.3.7 删除新闻
 上报报文
 ```
     {
